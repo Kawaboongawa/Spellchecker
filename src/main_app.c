@@ -1,6 +1,11 @@
 #include <stdio.h>
 
+#include "levenshtein.h"
+
 int main()
 {
-    printf("%s\n", "Code me, Cyril!");
+    char* s1 = "coucou";
+    char* s2 = "pouou";
+    printf("%d\n", levenshtein(s1, s2));
 }
+
