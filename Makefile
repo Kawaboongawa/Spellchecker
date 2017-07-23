@@ -6,7 +6,7 @@ DIRSRC= ./src/
 TARGET=TextMiningCompiler TextMiningApp
 HEADERS=
 SRC1= $(DIRSRC)main_compiler.c
-SRC2= $(DIRSRC)main_app.c $(DIRSRC)levenshtein.c
+SRC2= $(DIRSRC)main_app.c $(DIRSRC)levenshtein.c $(DIRSRC)tools.c 
 
 all: $(TARGET)
 
