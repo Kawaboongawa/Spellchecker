@@ -4,21 +4,27 @@ CC=gcc
 CFLAGS= -pedantic -Werror -Wall -Wextra -std=c99 -g
 DIRSRC= ./src/
 TARGET=TextMiningCompiler TextMiningApp
-HEADERS=
-SRC1= $(DIRSRC)main_compiler.c
-SRC2= $(DIRSRC)main_app.c $(DIRSRC)levenshtein.c $(DIRSRC)tools.c 
+HEADERS=headers
+
+SRC1= $(DIRSRC)main_compiler.c \
+$(DIRSRC)trie.c
+
+SRC2= $(DIRSRC)main_app.c \
+$(DIRSRC)levenshtein.c \
+$(DIRSRC)tools.c
 
 all: $(TARGET)
 
 TextMiningCompiler : $(SRC1)
-	$(CC) -o $@ $^ $(CFLAGS)
+	$(CC) -I$(HEADERS) -o $@ $^ $(CFLAGS)
 
 TextMiningApp : $(SRC2)
-	$(CC) -o $@ $^ $(CFLAGS)
-
+	$(CC) -I$(HEADERS) -o $@ $^ $(CFLAGS)
 
 clean:
-	rm -f $(DIRSRC)*.o
-	rm -f $(TARGET)
-        
-        
+	$(RM) $(DIRSRC)*.o
+	$(RM) $(TARGET)
+	$(RM) -r *.dSYM
+	$(RM) -r .DS_STORE
+
+.PHONY: all clean
