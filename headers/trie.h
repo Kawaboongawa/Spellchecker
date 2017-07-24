@@ -1,6 +1,7 @@
 #ifndef TRIE_H
 #define TRIE_H
 
+#include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
 
