@@ -11,7 +11,6 @@ int main()
 
     Word l[3] = {{.word = "blu", .freq = 52, .dist = 12},
                  {.word = "bleu", .freq = 40, .dist = 42},
-                 {.word = "ble", .freq = 1, .dist = 3}};    
+                 {.word = "ble", .freq = 1, .dist = 3}};
     print_json(l, 3);
 }
-
