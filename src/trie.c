@@ -7,7 +7,7 @@ void add_word_node(Trie *trie, TrieNode *node, char *word)
     return;
   }
 
-  uint8_t letter = *word;
+  char letter = *word;
 
   if (node->nb_children == 0)
   {
@@ -62,7 +62,7 @@ void add_word_trie(Trie *trie, char *word)
     return;
   }
 
-  uint8_t letter = *word;
+  char letter = *word;
 
   if (trie->nb_children == 0)
   {
@@ -139,7 +139,7 @@ char *load_trie(char *path)
     exit(1);
   }
   fseek(file, 0, SEEK_END);
-  len = ftell(file);
+  len = (unsigned long) ftell(file);
   rewind(file);
 
   char *m = calloc(len + 1, sizeof(char));

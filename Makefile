@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CC=gcc
-CFLAGS= -pedantic -Werror -Wall -Wextra -std=c99 -g
+CFLAGS= -pedantic -Werror -Wall -Wextra -std=c99 -g -Weverything
 DIRSRC= ./src/
 TARGET=TextMiningCompiler TextMiningApp
 HEADERS=headers

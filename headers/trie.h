@@ -6,11 +6,13 @@
 
 typedef struct TrieNode
 {
-  uint8_t letter;
+  char letter;
+  char pad[3];
   uint32_t freq;
 
   // Array of TrieNode
   uint8_t nb_children;
+  char pad2[7];
   struct TrieNode *children;
 } TrieNode;
 
