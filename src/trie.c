@@ -127,3 +127,29 @@ void release_trie(Trie *trie)
   }
   free(trie);
 }
+
+char *load_trie(char *path)
+{
+  FILE *file;
+  unsigned long len;
+  file = fopen(path, "r");
+  if (!file)
+  {
+    fprintf(stderr, "Error loading file %s\n", path);
+    exit(1);
+  }
+  fseek(file, 0, SEEK_END);
+  len = ftell(file);
+  rewind(file);
+
+  char *m = calloc(len + 1, sizeof(char));
+  if (!m)
+  {
+    fprintf(stderr, "Error could not malloc.\n");
+    exit(1);
+  }
+
+  fread(m, len, 1, file);
+  fclose(file);
+  return m;
+}

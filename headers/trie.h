@@ -29,4 +29,6 @@ void add_word_trie(Trie *trie, char *word);
 void release_node(TrieNode *trie);
 void release_trie(Trie *trie);
 
+char *load_trie(char *path);
+
 #endif /* end of include guard: TRIE_H */
