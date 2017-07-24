@@ -11,6 +11,8 @@ int main()
   add_word_trie(t, "coukou");
   add_word_trie(t, "couqou");
 
+  printf("nb nodes: %d\n", t->nb_nodes);
+
   release_trie(t);
 
   printf("%s\n", "Code me, Jeremy!");
