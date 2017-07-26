@@ -142,11 +142,15 @@ void add_word_trie(Trie *trie, char *word, uint32_t freq)
   }
 }
 
-void release_node(TrieNode *trie)
+void release_node(TrieNode *trie, int* a)
 {
+  if (trie->nb_children == 1)
+  {
+    (*a)++;
+  }
   for (uint8_t i = 0; i < trie->nb_children; i++)
   {
-    release_node(&trie->children[i]);
+    release_node(&trie->children[i], a);
   }
   if (trie->nb_children > 0)
     free(trie->children);
@@ -154,13 +158,15 @@ void release_node(TrieNode *trie)
 
 void release_trie(Trie *trie)
 {
+  int a = 0;
   for (uint8_t i = 0; i < trie->nb_children; i++)
   {
-    release_node(&trie->children[i]);
+    release_node(&trie->children[i], &a);
   }
   if (trie->nb_children > 0)
     free(trie->children);
   free(trie);
+  printf("\n%d nodes with 1 son.\n", a);
 }
 
 TrieNode *search_node(TrieNode *node, char *word)
@@ -235,7 +241,7 @@ char *load_trie(char *path)
 
 void binarize_node(FILE *file, TrieNode *node)
 {
-  fwrite(node, sizeof(TrieNode), 1, file);
+  fwrite(node, sizeof(TrieNodeCompact), 1, file);
   fflush(file);
 
   for (uint8_t i = 0; i < node->nb_children; i++)
@@ -267,7 +273,7 @@ void binarize_trie(Trie *trie, char *path)
 // Return NULL if no children
 // tmp = pointer to mmap zone
 // node = pointer to newly reconstruct node
-TrieNode *load_binarize_node(TrieNode *tmp, TrieNode *node)
+TrieNodeCompact *load_binarize_node(TrieNodeCompact *tmp, TrieNode *node)
 {
   node->letter = tmp->letter;
   node->freq = tmp->freq;
@@ -282,7 +288,7 @@ TrieNode *load_binarize_node(TrieNode *tmp, TrieNode *node)
       fprintf(stderr, "Error could not malloc.\n");
       exit(1);
     }
-    TrieNode *last = tmp + 1;
+    TrieNodeCompact *last = tmp + 1;
 
     for (uint8_t i = 0; i < node->nb_children; i++)
     {
@@ -304,9 +310,6 @@ TrieNode *load_binarize_node(TrieNode *tmp, TrieNode *node)
 
 Trie *load_binarize_trie(char *path)
 {
-  printf("size Trie: %lu\n", sizeof(Trie));
-  printf("size TrieNode: %lu\n", sizeof(TrieNode));
-
   int file;
   file = open(path, O_RDONLY);
   if (!file)
@@ -339,11 +342,11 @@ Trie *load_binarize_trie(char *path)
       fprintf(stderr, "Error could not malloc.\n");
       exit(1);
     }
-    TrieNode *last = (TrieNode *)(tmp + 1);
+    TrieNodeCompact *last = (TrieNodeCompact *)(tmp + 1);
 
     for (uint8_t i = 0; i < t->nb_children; i++)
     {
-      TrieNode *tmp_child = load_binarize_node(last, &t->children[i]);
+      TrieNodeCompact *tmp_child = load_binarize_node(last, &t->children[i]);
 
       if (tmp_child != NULL)
         last = (tmp_child + 1);

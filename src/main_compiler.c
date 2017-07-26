@@ -48,21 +48,25 @@ int main(void)
   free(tofree);
   free(file);
 
+  printf("size Trie: %lu\n", sizeof(Trie));
+  printf("size TrieNode: %lu\n", sizeof(TrieNode));
+  printf("size TrieNodeCompact: %lu\n", sizeof(TrieNodeCompact));
+
   printf("nb nodes: %u\n", t->nb_nodes);
   printf("Max freq: %d\n", max_freq);
 
-  TrieNode* n = search_trie(t, "gilles08");
+  TrieNode* n = search_trie(t, "imendudoubs");
   printf("freq: %d\n", n->freq);
 
   binarize_trie(t, "tree.bin");
-  printf("\n\n");
   Trie* loaded = load_binarize_trie("tree.bin");
 
   printf("nb nodes: %u\n", loaded->nb_nodes);
-  n = search_trie(loaded, "gilles08");
+  n = search_trie(loaded, "imendudoubs");
   printf("freq: %d\n", n->freq);
 
   release_trie(t);
+  release_trie(loaded);
 
   return 0;
 }

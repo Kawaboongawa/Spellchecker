@@ -10,8 +10,8 @@
 
 int main(int argc, char** argv)
 {
-    argc = argc;
-    argv = argv;
+    (void) argc;
+    (void) argv;
     String s = create_string(3);
     append_letter(&s, 'I');
     append_letter(&s, 'L');
@@ -37,13 +37,11 @@ int main(int argc, char** argv)
         printf("Aborted (core dumped)\n");
         return 134;
     }
-    
+
     size_t  size = 0;
     char* buf = NULL;
     getline(&buf, &size, stdin);
     printf("%s", buf);
     free(buf);
     */
-} 
-
-
+}

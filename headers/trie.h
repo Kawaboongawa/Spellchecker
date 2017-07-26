@@ -11,20 +11,16 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-// 14
 typedef struct TrieNode
 {
   char letter;
-  char pad1[3];
   uint32_t freq;
 
   // Array of TrieNode
   uint8_t nb_children;
-  char pad2[7];
   struct TrieNode *children;
 } TrieNode;
 
-// 13
 typedef struct Trie
 {
   // General metadatas
@@ -32,13 +28,21 @@ typedef struct Trie
 
   // Array of TrieNode
   uint8_t nb_children;
-  char pad[3];
   struct TrieNode *children;
 } Trie;
 
+typedef struct TrieNodeCompact
+{
+  char letter;
+  uint32_t freq;
+
+  // Array of TrieNode
+  uint8_t nb_children;
+} TrieNodeCompact;
+
 void add_word_node(Trie *trie, TrieNode *node, char *word, uint32_t freq);
 void add_word_trie(Trie *trie, char *word, uint32_t freq);
-void release_node(TrieNode *trie);
+void release_node(TrieNode *trie, int* a);
 void release_trie(Trie *trie);
 
 // Search for a word in a trie, return NULL if not found
