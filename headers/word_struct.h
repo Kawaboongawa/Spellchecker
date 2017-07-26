@@ -5,21 +5,6 @@
 
 #include "tools.h"
 
-
-typedef struct
-{
-    Word*  word;
-    uint   index;
-    uint   size;
-} Words;
-
-typedef struct
-{
-    char* str;
-    int   index;
-    int   size;
-} String;
-
 Words create_words(int size);
 void  delete_words(Words* w);
 void  append_word(Words* w, Word* word);

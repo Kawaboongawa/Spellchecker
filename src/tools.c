@@ -1,14 +1,14 @@
 #include "tools.h"
 
-void print_json(Word words[], uint len)
+void print_json(Words* words)
 {
     printf("[");
-    for (uint i = 0; i < len; i++)
+    for (uint i = 0; i < words->index; i++)
     {
         printf("{\"word\":\"%s\",\"freq\":%d,"
-               "\"distance\":%d}", words[i].word,
-               words[i].freq, words[i].dist);
-        if (i < len - 1)
+               "\"distance\":%d}", words->word[i].word,
+               words->word[i].freq, words->word[i].dist);
+        if (i < words->index - 1)
             printf(",");
     }
     printf("]\n");
