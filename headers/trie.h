@@ -27,10 +27,14 @@ typedef struct Trie
   struct TrieNode *children;
 } Trie;
 
-void add_word_node(Trie *trie, TrieNode *node, char *word);
-void add_word_trie(Trie *trie, char *word);
+void add_word_node(Trie *trie, TrieNode *node, char *word, uint32_t freq);
+void add_word_trie(Trie *trie, char *word, uint32_t freq);
 void release_node(TrieNode *trie);
 void release_trie(Trie *trie);
+
+// Search for a word in a trie, return NULL if not found
+TrieNode *search_trie(Trie *trie, char *word);
+TrieNode *search_node(TrieNode *node, char *word);
 
 char *load_trie(char *path);
 

@@ -31,10 +31,13 @@ int main(void)
     }
 
     int i = 0;
+    char *tmp_tok = NULL;
     while ((token2 = strsep(&str2, "\t")) != NULL)
     {
       if (i % 2 == 0) {
-        add_word_trie(t, token2);
+        tmp_tok = token2;
+      } else {
+        add_word_trie(t, tmp_tok, atoi(token2));
       }
       i++;
     }
@@ -43,7 +46,11 @@ int main(void)
   free(tofree);
   free(file);
 
-  //printf("nb nodes: %u\n", t->nb_nodes);
+  printf("nb nodes: %u\n", t->nb_nodes);
+
+  TrieNode* n = search_trie(t, "gilles08");
+  printf("freq: %d", n->freq);
+
   release_trie(t);
 
   return 0;

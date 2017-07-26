@@ -1,7 +1,7 @@
 #include "trie.h"
 #include <assert.h>
 
-void add_word_node(Trie *trie, TrieNode *node, char *word)
+void add_word_node(Trie *trie, TrieNode *node, char *word, uint32_t freq)
 {
   if (!trie || !node || !word || *word == '\0')
   {
@@ -21,10 +21,14 @@ void add_word_node(Trie *trie, TrieNode *node, char *word)
     node->children->letter = *word;
     node->children->nb_children = 0;
     node->children->children = NULL;
-
     node->nb_children++;
     trie->nb_nodes++;
-    add_word_node(trie, node->children, ++word);
+    if (*(word + 1) == '\0')
+    {
+      node->children->freq = freq;
+    } else {
+      add_word_node(trie, node->children, ++word, freq);
+    }
     return;
   }
 
@@ -32,7 +36,12 @@ void add_word_node(Trie *trie, TrieNode *node, char *word)
   {
     if (node->children[i].letter == *word)
     {
-      add_word_node(trie, &node->children[i], ++word);
+      if (*(word + 1) == '\0')
+      {
+        node->children[i].freq = freq;
+      } else {
+        add_word_node(trie, &node->children[i], ++word, freq);
+      }
       return;
     }
 
@@ -50,14 +59,20 @@ void add_word_node(Trie *trie, TrieNode *node, char *word)
       node->children[node->nb_children - 1].letter = *word;
       node->children[node->nb_children - 1].nb_children = 0;
       node->children[node->nb_children - 1].children = NULL;
+      node->children[node->nb_children - 1].freq = 0;
 
-      add_word_node(trie, &node->children[node->nb_children - 1], ++word);
+      if (*(word + 1) == '\0')
+      {
+        node->children[node->nb_children - 1].freq = freq;
+      } else {
+        add_word_node(trie, &node->children[node->nb_children - 1], ++word, freq);
+      }
       return;
     }
   }
 }
 
-void add_word_trie(Trie *trie, char *word)
+void add_word_trie(Trie *trie, char *word, uint32_t freq)
 {
   if (!trie || !word || *word == '\0')
   {
@@ -79,7 +94,12 @@ void add_word_trie(Trie *trie, char *word)
     trie->children->children = NULL;
     trie->nb_children++;
     trie->nb_nodes++;
-    add_word_node(trie, trie->children, ++word);
+    if (*(word + 1) == '\0')
+    {
+      trie->children->freq = freq;
+    } else {
+      add_word_node(trie, trie->children, ++word, freq);
+    }
     return;
   }
 
@@ -87,7 +107,12 @@ void add_word_trie(Trie *trie, char *word)
   {
     if (trie->children[i].letter == *word)
     {
-      add_word_node(trie, &trie->children[i], ++word);
+      if (*(word + 1) == '\0')
+      {
+        trie->children[i].freq = freq;
+      } else {
+        add_word_node(trie, &trie->children[i], ++word, freq);
+      }
       return;
     }
 
@@ -105,8 +130,14 @@ void add_word_trie(Trie *trie, char *word)
       trie->children[trie->nb_children - 1].letter = *word;
       trie->children[trie->nb_children - 1].nb_children = 0;
       trie->children[trie->nb_children - 1].children = NULL;
+      trie->children[trie->nb_children - 1].freq = 0;
 
-      add_word_node(trie, &trie->children[trie->nb_children - 1], ++word);
+      if (*(word + 1) == '\0')
+      {
+        trie->children[trie->nb_children - 1].freq = freq;
+      } else {
+        add_word_node(trie, &trie->children[trie->nb_children - 1], ++word, freq);
+      }
       return;
     }
   }
@@ -131,6 +162,44 @@ void release_trie(Trie *trie)
   if (trie->nb_children > 0)
     free(trie->children);
   free(trie);
+}
+
+TrieNode *search_node(TrieNode *node, char *word)
+{
+  if (!node || !word || *word == '\0')
+  {
+    return NULL;
+  }
+
+  for (uint8_t i = 0; i < node->nb_children; i++)
+  {
+    if (node->children[i].letter == *word)
+    {
+      if (*(word + 1) != '\0')
+        return search_node(&node->children[i], ++word);
+      return &node->children[i];
+    }
+  }
+  return NULL;
+}
+
+TrieNode *search_trie(Trie *trie, char *word)
+{
+  if (!trie || !word || *word == '\0')
+  {
+    return NULL;
+  }
+
+  for (uint8_t i = 0; i < trie->nb_children; i++)
+  {
+    if (trie->children[i].letter == *word)
+    {
+      if (*(word + 1) != '\0')
+        return search_node(&trie->children[i], ++word);
+      return &trie->children[i];
+    }
+  }
+  return NULL;
 }
 
 char *load_trie(char *path)
