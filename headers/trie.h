@@ -4,19 +4,27 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <stdint.h>
 #include <string.h>
+#include <assert.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
 
+// 14
 typedef struct TrieNode
 {
   char letter;
+  char pad1[3];
   uint32_t freq;
 
   // Array of TrieNode
   uint8_t nb_children;
+  char pad2[7];
   struct TrieNode *children;
 } TrieNode;
 
+// 13
 typedef struct Trie
 {
   // General metadatas
@@ -24,6 +32,7 @@ typedef struct Trie
 
   // Array of TrieNode
   uint8_t nb_children;
+  char pad[3];
   struct TrieNode *children;
 } Trie;
 
@@ -37,5 +46,7 @@ TrieNode *search_trie(Trie *trie, char *word);
 TrieNode *search_node(TrieNode *node, char *word);
 
 char *load_trie(char *path);
+void binarize_trie(Trie *trie, char *path);
+Trie *load_binarize_trie(char *path);
 
 #endif /* end of include guard: TRIE_H */

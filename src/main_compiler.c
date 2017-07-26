@@ -11,6 +11,7 @@ int main(void)
   t->children = NULL;
 
   char *file = load_trie("misc/words.txt");
+  uint32_t max_freq = 0;
 
   char *token, *str, *tofree;
   tofree = str = strdup(file);
@@ -37,7 +38,8 @@ int main(void)
       if (i % 2 == 0) {
         tmp_tok = token2;
       } else {
-        add_word_trie(t, tmp_tok, atoi(token2));
+        if ((uint32_t)atoi(token2) > max_freq) max_freq = (uint32_t)atoi(token2);
+        add_word_trie(t, tmp_tok, (uint32_t)atoi(token2));
       }
       i++;
     }
@@ -47,9 +49,18 @@ int main(void)
   free(file);
 
   printf("nb nodes: %u\n", t->nb_nodes);
+  printf("Max freq: %d\n", max_freq);
 
   TrieNode* n = search_trie(t, "gilles08");
-  printf("freq: %d", n->freq);
+  printf("freq: %d\n", n->freq);
+
+  binarize_trie(t, "tree.bin");
+  printf("\n\n");
+  Trie* loaded = load_binarize_trie("tree.bin");
+
+  printf("nb nodes: %u\n", loaded->nb_nodes);
+  n = search_trie(loaded, "gilles08");
+  printf("freq: %d\n", n->freq);
 
   release_trie(t);
 
