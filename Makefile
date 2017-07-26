@@ -26,5 +26,6 @@ clean:
 	$(RM) $(TARGET)
 	$(RM) -r *.dSYM
 	$(RM) -r .DS_STORE
+	$(RM) -r misc/.DS_STORE
 
 .PHONY: all clean

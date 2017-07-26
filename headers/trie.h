@@ -4,16 +4,16 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdint.h>
+#include <string.h>
 
 typedef struct TrieNode
 {
   char letter;
-  char pad[3];
   uint32_t freq;
 
   // Array of TrieNode
   uint8_t nb_children;
-  char pad2[7];
   struct TrieNode *children;
 } TrieNode;
 
@@ -23,7 +23,7 @@ typedef struct Trie
   uint32_t nb_nodes;
 
   // Array of TrieNode
-  uint32_t nb_children;
+  uint8_t nb_children;
   struct TrieNode *children;
 } Trie;
 
