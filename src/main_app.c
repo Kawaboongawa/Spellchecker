@@ -3,18 +3,33 @@
 
 #include "levenshtein.h"
 #include "tools.h"
-
+#include "word_struct.h"
 #define BUF_SIZE 128
 
 
 
 int main(int argc, char** argv)
 {
+    argc = argc;
+    argv = argv;
+    String s = create_string(3);
+    append_letter(&s, 'I');
+    append_letter(&s, 'L');
+    append_letter(&s, 'O');
+    append_letter(&s, 'O');
+    append_letter(&s, 'p');
+    append_letter(&s, 'I');
+    dec_index(&s);
+    append_letter(&s, 'p');
+    char* str = get_word(&s);
+    printf("%s\n%d\n", str, s.index);
+    free(str);
+    delete_string(&s);
     /*Word l[3] = {{.word = "blu", .freq = 52, .dist = 12},
       {.word = "bleu", .freq = 40, .dist = 42},
       {.word = "ble", .freq = 1, .dist = 3}};
       print_json(l, 3);*/
-    argv = argv;
+    /*argv = argv;
     //printf("%c\n", fgetc(stdin));
     if (argc < 2)
     {
@@ -28,6 +43,7 @@ int main(int argc, char** argv)
     getline(&buf, &size, stdin);
     printf("%s", buf);
     free(buf);
+    */
 } 
 
 

@@ -13,3 +13,13 @@ void print_json(Word words[], uint len)
     }
     printf("]\n");
 }
+
+inline int min3(int a, int b, int c)
+{
+    int res = a;
+    if (b < a && b < c)
+        res = b;
+    else if (c < a && c < b)
+        res = c;
+    return res;
+}

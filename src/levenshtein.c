@@ -1,15 +1,5 @@
 #include "levenshtein.h"
 
-static inline int min3(int a, int b, int c)
-{
-    int res = a;
-    if (b < a && b < c)
-        res = b;
-    if (c < a && c < b)
-        res = c;
-    return res;
-}
-
 int levenshtein(char *s1, char *s2)
 {
     uint len1 = strlen(s1); //x

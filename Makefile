@@ -11,7 +11,9 @@ $(DIRSRC)trie.c
 
 SRC2= $(DIRSRC)main_app.c \
 $(DIRSRC)levenshtein.c \
-$(DIRSRC)tools.c
+$(DIRSRC)tools.c \
+$(DIRSRC)word_struct.c \
+$(DIRSRC)search.c
 
 all: $(TARGET)
 
