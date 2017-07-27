@@ -54,5 +54,11 @@ char* get_word(String* s)
 {
     char* str = malloc(s->index + 1);
     str = strncpy(str, s->str, s->index);
+    str[s->index] = '\0';
     return str;
+}
+
+char get_letter_index(String* s, int index)
+{
+    return s->str[index];
 }

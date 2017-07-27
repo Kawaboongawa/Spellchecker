@@ -29,7 +29,7 @@ void print_json(Words* words)
 inline int min3(int a, int b, int c)
 {
     int res = a;
-    if (b < a && b < c)
+    if (b < a && b <= c)
         res = b;
     else if (c < a && c < b)
         res = c;

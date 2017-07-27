@@ -14,3 +14,5 @@ void  delete_string(String* s);
 void  append_letter(String* s, char letter);
 void  dec_index(String* s);
 char* get_word(String* s);
+char  get_letter_index(String* s, int index);
+
