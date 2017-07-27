@@ -11,7 +11,7 @@ void add_word_node(TrieRadix *trie, TrieNodeRadix *node, char *word, uint32_t fr
   {
     assert(node->children == NULL);
 
-    node->children = malloc(sizeof(TrieNode));
+    node->children = malloc(sizeof(TrieNodeRadix));
     if (!node->children)
     {
       fprintf(stderr, "Error could not malloc.\n");
@@ -53,7 +53,7 @@ void add_word_node(TrieRadix *trie, TrieNodeRadix *node, char *word, uint32_t fr
     {
       node->nb_children++;
       trie->nb_nodes++;
-      node->children = realloc(node->children, node->nb_children * sizeof(TrieNode));
+      node->children = realloc(node->children, node->nb_children * sizeof(TrieNodeRadix));
       if (!node->children)
       {
         fprintf(stderr, "Error could not realloc.\n");
@@ -89,7 +89,7 @@ void add_word_trie(TrieRadix *trie, char *word, uint32_t freq)
   {
     assert(trie->children == NULL);
 
-    trie->children = malloc(sizeof(TrieNode));
+    trie->children = malloc(sizeof(TrieNodeRadix));
     if (!trie->children)
     {
       fprintf(stderr, "Error could not malloc.\n");
@@ -131,7 +131,7 @@ void add_word_trie(TrieRadix *trie, char *word, uint32_t freq)
     {
       trie->nb_children++;
       trie->nb_nodes++;
-      trie->children = realloc(trie->children, trie->nb_children * sizeof(TrieNode));
+      trie->children = realloc(trie->children, trie->nb_children * sizeof(TrieNodeRadix));
       if (!trie->children)
       {
         fprintf(stderr, "Error could not realloc.\n");
@@ -279,9 +279,7 @@ void binarize_node(FILE *file, TrieNodeRadix *node)
   c.nb_children = node->nb_children;
 
   fwrite(&c, sizeof(TrieNodeCompact), 1, file);
-  fflush(file);
   fwrite(node->letter, strlen(node->letter), 1, file);
-  fflush(file);
   putc('\0', file);
   fflush(file);
 
@@ -430,7 +428,6 @@ void print_node(TrieNodeRadix* t, int* nb)
 
   for (uint8_t i = 0; i < t->nb_children; i++)
   {
-    assert(i != 255);
     (*nb)++;
     printf("%d -> %d;\n", my_nb, *nb);
     print_node(&t->children[i], nb);
@@ -444,7 +441,6 @@ void print_trie(TrieRadix* t)
   printf("digraph G {\n");
   for (uint8_t i = 0; i < t->nb_children; i++)
   {
-    assert(i != 255);
     print_node(&t->children[i], &nb);
   }
   printf("}\n");
@@ -455,7 +451,6 @@ void count_node(TrieNodeRadix* t, int* a)
   (*a)++;
   for (uint8_t i = 0; i < t->nb_children; i++)
   {
-    assert(i != 255);
     count_node(&t->children[i], a);
   }
 }
@@ -465,7 +460,6 @@ int count_trie(TrieRadix* t)
   int a = 0;
   for (uint8_t i = 0; i < t->nb_children; i++)
   {
-    assert(i != 255);
     count_node(&t->children[i], &a);
   }
   return a;

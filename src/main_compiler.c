@@ -103,19 +103,20 @@ int main(int argc, char *argv[])
   free(tofree);
   free(file);
 
-  //printf("size Trie: %lu\n", sizeof(Trie));
-  //printf("size TrieNode: %lu\n", sizeof(TrieNode));
-  //printf("size TrieNodeCompact: %lu\n", sizeof(TrieNodeCompact));
-
-  //printf("nb nodes: %u\n", t->nb_nodes);
-  //printf("Max freq: %d\n", max_freq);
-
-  //assert(count_trie(t) == (int)t->nb_nodes);
   compress_trie(t);
-  //assert(count_trie(t) == (int)t->nb_nodes);
-
-  //print_trie(t);
   binarize_trie(t, bin);
+
+  if (argc == 4 && strcmp(argv[3], "--graph") == 0)
+  {
+    print_trie(t);
+  }
+  else if (argc == 4 && strcmp(argv[3], "--test") == 0)
+  {
+    TrieRadix* loaded = load_binarize_trie(bin);
+    test(loaded);
+    release_trie(loaded);
+  }
+
   release_trie(t);
 
   //TrieRadix* loaded = load_binarize_trie("tree.bin");
@@ -126,7 +127,7 @@ int main(int argc, char *argv[])
 
   //print_trie(loaded);
   //release_trie(t);
-  //release_trie(loaded);
+  //release_trie(loaded);§
 
   return 0;
 }
