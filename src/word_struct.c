@@ -1,4 +1,5 @@
 #include "word_struct.h"
+#include <assert.h>
 
 Words create_words(int size)
 {
@@ -11,7 +12,7 @@ void  delete_words(Words* w)
     free(w->word);
 }
 
-void  append_word(Words* w, Word* word)
+void append_word(Words* w, Word* word)
 {
     if (w->index == w->size - 1)
     {
@@ -29,12 +30,12 @@ String create_string(int size)
     return new_struct;
 }
 
-void  delete_string(String* s)
+void delete_string(String* s)
 {
     free(s->str);
 }
 
-void  append_letter(String* s, char letter)
+void append_letter(String* s, char letter)
 {
     if (s->index == s->size - 1)
     {
@@ -45,7 +46,7 @@ void  append_letter(String* s, char letter)
     s->index++;
 }
 
-void  dec_index(String* s, uint nb)
+void dec_index(String* s, uint nb)
 {
     s->index -= nb;
 }
@@ -60,5 +61,6 @@ char* get_word(String* s)
 
 char get_letter_index(String* s, int index)
 {
+    assert(index < s->index);
     return s->str[index];
 }
