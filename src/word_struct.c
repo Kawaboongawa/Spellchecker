@@ -16,7 +16,7 @@ void  append_word(Words* w, Word* word)
     if (w->index == w->size - 1)
     {
         w->size += 512;
-        w->word = realloc(w->word, w->size);
+        w->word = realloc(w->word, w->size * sizeof (Word));
     }
     w->word[w->index] = *word;
     w->index++;
@@ -39,7 +39,7 @@ void  append_letter(String* s, char letter)
     if (s->index == s->size - 1)
     {
         s->size += 512;
-        s->str = realloc(s->str, s->size);
+        s->str = realloc(s->str, s->size * sizeof (char));
     }
     s->str[s->index] = letter;
     s->index++;
@@ -54,5 +54,11 @@ char* get_word(String* s)
 {
     char* str = malloc(s->index + 1);
     str = strncpy(str, s->str, s->index);
+    str[s->index] = '\0';
     return str;
+}
+
+char get_letter_index(String* s, int index)
+{
+    return s->str[index];
 }
