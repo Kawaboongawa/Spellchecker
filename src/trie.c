@@ -261,10 +261,7 @@ void binarize_node(FILE *file, TrieNodeRadix *node)
   fflush(file);
 
   for (uint8_t i = 0; i < node->nb_children; i++)
-  {
-    assert(i != 255);
     binarize_node(file, &node->children[i]);
-  }
 }
 
 void binarize_trie(TrieRadix *trie, char *path)
@@ -281,10 +278,7 @@ void binarize_trie(TrieRadix *trie, char *path)
   fflush(file);
 
   for (uint8_t i = 0; i < trie->nb_children; i++)
-  {
-    assert(i != 255);
     binarize_node(file, &trie->children[i]);
-  }
 
   fclose(file);
 }
@@ -392,7 +386,6 @@ void print_node(TrieNodeRadix* t, int* nb, int depth, int cur_depth)
       printf("%d -> %d;\n", my_nb, *nb);
       print_node(&t->children[i], nb, depth, ++cur_depth);
     }
-    fflush(stdout);
   }
 }
 
