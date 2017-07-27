@@ -147,23 +147,18 @@ void search_rec(TrieNodeRadix* tn, char* word, String* str, ushort prevrow[],
       append_word(res, &currword);
   }
 
-  uchar b = 0;
+  // Merge the two conditions here to avoid useless tmp variable no big deal
   for (uint i = 0; i <= len; i++)
   {
     if (currow[i] <= cost)
     {
-      b = 1;
-      break;
-    }
-  }
-
-  if (b)
-  {
       for (size_t i = 0; i < tn->nb_children; i++)
       {
           search_rec(&(tn->children[i]), word, str, currow, prevrow,
                      res, cost, len, y + 1);
       }
+      break;
+    }
   }
 
   // Dec index can now decrease by a number the index
