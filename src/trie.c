@@ -3,9 +3,7 @@
 void add_word_node(TrieRadix *trie, TrieNodeRadix *node, char *word, uint32_t freq)
 {
   if (!trie || !node || !word || *word == '\0')
-  {
     return;
-  }
 
   if (node->nb_children == 0)
   {
@@ -26,12 +24,12 @@ void add_word_node(TrieRadix *trie, TrieNodeRadix *node, char *word, uint32_t fr
     node->children->children = NULL;
     node->nb_children++;
     trie->nb_nodes++;
+
     if (*(word + 1) == '\0')
-    {
       node->children->freq = freq;
-    } else {
+    else
       add_word_node(trie, node->children, ++word, freq);
-    }
+
     return;
   }
 
@@ -40,11 +38,10 @@ void add_word_node(TrieRadix *trie, TrieNodeRadix *node, char *word, uint32_t fr
     if (node->children[i].letter[0] == *word)
     {
       if (*(word + 1) == '\0')
-      {
         node->children[i].freq = freq;
-      } else {
+      else
         add_word_node(trie, &node->children[i], ++word, freq);
-      }
+
       return;
     }
 
@@ -68,11 +65,10 @@ void add_word_node(TrieRadix *trie, TrieNodeRadix *node, char *word, uint32_t fr
       node->children[node->nb_children - 1].freq = 0;
 
       if (*(word + 1) == '\0')
-      {
         node->children[node->nb_children - 1].freq = freq;
-      } else {
+      else
         add_word_node(trie, &node->children[node->nb_children - 1], ++word, freq);
-      }
+
       return;
     }
   }
@@ -81,9 +77,7 @@ void add_word_node(TrieRadix *trie, TrieNodeRadix *node, char *word, uint32_t fr
 void add_word_trie(TrieRadix *trie, char *word, uint32_t freq)
 {
   if (!trie || !word || *word == '\0')
-  {
     return;
-  }
 
   if (trie->nb_children == 0)
   {
@@ -104,12 +98,12 @@ void add_word_trie(TrieRadix *trie, char *word, uint32_t freq)
     trie->children->children = NULL;
     trie->nb_children++;
     trie->nb_nodes++;
+
     if (*(word + 1) == '\0')
-    {
       trie->children->freq = freq;
-    } else {
+    else
       add_word_node(trie, trie->children, ++word, freq);
-    }
+
     return;
   }
 
@@ -118,11 +112,10 @@ void add_word_trie(TrieRadix *trie, char *word, uint32_t freq)
     if (trie->children[i].letter[0] == *word)
     {
       if (*(word + 1) == '\0')
-      {
         trie->children[i].freq = freq;
-      } else {
+      else
         add_word_node(trie, &trie->children[i], ++word, freq);
-      }
+
       return;
     }
 
@@ -146,11 +139,10 @@ void add_word_trie(TrieRadix *trie, char *word, uint32_t freq)
       trie->children[trie->nb_children - 1].freq = 0;
 
       if (*(word + 1) == '\0')
-      {
         trie->children[trie->nb_children - 1].freq = freq;
-      } else {
+      else
         add_word_node(trie, &trie->children[trie->nb_children - 1], ++word, freq);
-      }
+
       return;
     }
   }
@@ -159,9 +151,8 @@ void add_word_trie(TrieRadix *trie, char *word, uint32_t freq)
 void release_node(TrieNodeRadix *trie)
 {
   for (uint8_t i = 0; i < trie->nb_children; i++)
-  {
     release_node(&trie->children[i]);
-  }
+
   if (trie->nb_children > 0)
     free(trie->children);
 }
@@ -169,9 +160,8 @@ void release_node(TrieNodeRadix *trie)
 void release_trie(TrieRadix *trie)
 {
   for (uint8_t i = 0; i < trie->nb_children; i++)
-  {
     release_node(&trie->children[i]);
-  }
+
   if (trie->nb_children > 0)
     free(trie->children);
   free(trie);
@@ -180,9 +170,7 @@ void release_trie(TrieRadix *trie)
 TrieNodeRadix *search_node(TrieNodeRadix *node, char *word)
 {
   if (!node || !word || *word == '\0')
-  {
     return NULL;
-  }
 
   for (uint8_t i = 0; i < node->nb_children; i++)
   {
@@ -197,9 +185,7 @@ TrieNodeRadix *search_node(TrieNodeRadix *node, char *word)
       if (node->children[i].letter[j] == *word && j == len - 1l)
       {
         if (*(word + 1) != '\0')
-        {
           return search_node(&node->children[i], ++word);
-        }
         return &node->children[i];
       }
       word++;
@@ -212,9 +198,7 @@ TrieNodeRadix *search_node(TrieNodeRadix *node, char *word)
 TrieNodeRadix *search_trie(TrieRadix *trie, char *word)
 {
   if (!trie || !word || *word == '\0')
-  {
     return NULL;
-  }
 
   for (uint8_t i = 0; i < trie->nb_children; i++)
   {
@@ -229,9 +213,7 @@ TrieNodeRadix *search_trie(TrieRadix *trie, char *word)
       if (trie->children[i].letter[j] == *word && j == len - 1l)
       {
         if (*(word + 1) != '\0')
-        {
           return search_node(&trie->children[i], ++word);
-        }
         return &trie->children[i];
       }
       word++;
@@ -266,11 +248,6 @@ char *load_trie(char *path)
   fclose(file);
   return m;
 }
-
-//    A
-// B  C  D
-//   E
-//
 
 void binarize_node(FILE *file, TrieNodeRadix *node)
 {
@@ -323,7 +300,6 @@ TrieNodeCompact *load_binarize_node(TrieNodeCompact *tmp, TrieNodeRadix *node)
 
   // chars of letters are after struct in binary format
   char *ptr = (char *)(tmp + 1);
-  //printf("%c\n", *ptr);
   unsigned long len = strlen(ptr) + 1;
   node->letter = malloc(len * sizeof(char));
   strncpy(node->letter, ptr, len);
@@ -341,17 +317,8 @@ TrieNodeCompact *load_binarize_node(TrieNodeCompact *tmp, TrieNodeRadix *node)
     TrieNodeCompact *last = tmp;
 
     for (uint8_t i = 0; i < node->nb_children; i++)
-    {
-      assert(i != 255);
       last = load_binarize_node(last, &node->children[i]);
-      if (i != node->nb_children - 1)
-      {
-        // chars of letters are after struct in binary format
-        //char *ptr2 = (char *)(last + 1);
-        //printf("%c\n", *ptr2);
-        //last = (TrieNodeCompact *)(ptr2 + strlen(ptr2) + 1);
-      }
-    }
+
     return last;
   }
   else
@@ -376,7 +343,6 @@ TrieRadix *load_binarize_trie(char *path)
 
   // mmap binary file
   TrieRadix *tmp = mmap(0, (size_t)s.st_size, PROT_READ | PROT_WRITE, MAP_PRIVATE, file, 0);
-  //printf("%p\n", (void *)tmp);
 
   // pointer use to reconstruct the trie, copy informations from root node
   TrieRadix *t = malloc(sizeof(TrieRadix));
@@ -404,18 +370,10 @@ TrieRadix *load_binarize_trie(char *path)
     {
       assert(i != 255);
       last = load_binarize_node(last, &t->children[i]);
-      if (i != t->nb_children - 1)
-      {
-        // chars of letters are after struct in binary format
-        //char *ptr = (char *)(last + 1);
-        //unsigned long len = strlen(ptr) + 1;
-        //last = (TrieNodeCompact *)(ptr + len);
-        //printf("%p\n", (void *)last);
-      }
     }
-  } else {
-    t->children = NULL;
   }
+  else
+    t->children = NULL;
 
   close(file);
   return t;
@@ -443,9 +401,7 @@ void print_trie(TrieRadix* t, int depth)
   int nb = 0;
   printf("digraph G {\n");
   for (uint8_t i = 0; i < t->nb_children; i++)
-  {
     print_node(&t->children[i], &nb, depth, 0);
-  }
   printf("}\n");
 }
 
@@ -453,18 +409,14 @@ void count_node(TrieNodeRadix* t, int* a)
 {
   (*a)++;
   for (uint8_t i = 0; i < t->nb_children; i++)
-  {
     count_node(&t->children[i], a);
-  }
 }
 
 int count_trie(TrieRadix* t)
 {
   int a = 0;
   for (uint8_t i = 0; i < t->nb_children; i++)
-  {
     count_node(&t->children[i], &a);
-  }
   return a;
 }
 
@@ -475,7 +427,6 @@ void compress_node(TrieRadix* r, TrieNodeRadix* t)
   {
     assert(t->children);
     t->freq = t->children->freq;
-    // printf("%u\n", t->children->freq);
 
     unsigned long len = strlen(t->letter);
     t->letter = realloc(t->letter, (len + 2) * sizeof(char));
@@ -488,22 +439,17 @@ void compress_node(TrieRadix* r, TrieNodeRadix* t)
     t->children = t->children->children;
     if (!t->children)
       assert(t->nb_children == 0);
+
     free(tmp);
   }
 
   for (uint8_t i = 0; i < t->nb_children; i++)
-  {
-    assert(i != 255);
     compress_node(r, &t->children[i]);
-  }
 }
 
 // Optimize trie to radix trie
 void compress_trie(TrieRadix* t)
 {
   for (uint8_t i = 0; i < t->nb_children; i++)
-  {
-    assert(i != 255);
     compress_node(t, &t->children[i]);
-  }
 }

@@ -4,6 +4,7 @@
 Words create_words(int size)
 {
     Word* w = malloc(size * sizeof (Words));
+    assert(w);
     Words new_struct = {.word = w, .index = 0, .size = size};
     return new_struct;
 }
@@ -18,6 +19,7 @@ void append_word(Words* w, Word* word)
     {
         w->size += 512;
         w->word = realloc(w->word, w->size * sizeof (Word));
+        assert(w->word);
     }
     w->word[w->index] = *word;
     w->index++;
@@ -26,7 +28,8 @@ void append_word(Words* w, Word* word)
 String create_string(int size)
 {
     char* str = malloc(size * sizeof (String));
-    String new_struct = {.str = str, .index = 0, .size = size};
+    assert(str);
+    String new_struct = { .str = str, .index = 0, .size = size };
     return new_struct;
 }
 
@@ -41,6 +44,7 @@ void append_letter(String* s, char letter)
     {
         s->size += 512;
         s->str = realloc(s->str, s->size * sizeof (char));
+        assert(s->str);
     }
     s->str[s->index] = letter;
     s->index++;
@@ -54,6 +58,7 @@ void dec_index(String* s, uint nb)
 char* get_word(String* s)
 {
     char* str = malloc(s->index + 1);
+    assert(str);
     str = strncpy(str, s->str, s->index);
     str[s->index] = '\0';
     return str;
