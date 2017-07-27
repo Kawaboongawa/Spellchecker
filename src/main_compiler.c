@@ -106,9 +106,9 @@ int main(int argc, char *argv[])
   compress_trie(t);
   binarize_trie(t, bin);
 
-  if (argc == 4 && strcmp(argv[3], "--graph") == 0)
+  if (argc == 5 && strcmp(argv[3], "--graph") == 0)
   {
-    print_trie(t);
+    print_trie(t, atoi(argv[4]));
   }
   else if (argc == 4 && strcmp(argv[3], "--test") == 0)
   {

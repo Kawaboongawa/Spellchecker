@@ -84,6 +84,6 @@ TrieRadix *load_binarize_trie(char *path);
 
 void compress_trie(TrieRadix* t);
 int count_trie(TrieRadix* t);
-void print_trie(TrieRadix* t);
+void print_trie(TrieRadix* t, int depth);
 
 #endif /* end of include guard: TRIE_H */

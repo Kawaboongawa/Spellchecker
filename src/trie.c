@@ -421,27 +421,30 @@ TrieRadix *load_binarize_trie(char *path)
   return t;
 }
 
-void print_node(TrieNodeRadix* t, int* nb)
+void print_node(TrieNodeRadix* t, int* nb, int depth, int cur_depth)
 {
-  printf("%d [label=\"%s,%u\"];\n", *nb, t->letter, t->freq);
-  int my_nb = *nb;
-
-  for (uint8_t i = 0; i < t->nb_children; i++)
+  if (cur_depth < depth)
   {
-    (*nb)++;
-    printf("%d -> %d;\n", my_nb, *nb);
-    print_node(&t->children[i], nb);
+    printf("%d [label=\"%s,%u\"];\n", *nb, t->letter, t->freq);
+    int my_nb = *nb;
+
+    for (uint8_t i = 0; i < t->nb_children; i++)
+    {
+      (*nb)++;
+      printf("%d -> %d;\n", my_nb, *nb);
+      print_node(&t->children[i], nb, depth, ++cur_depth);
+    }
+    fflush(stdout);
   }
-  fflush(stdout);
 }
 
-void print_trie(TrieRadix* t)
+void print_trie(TrieRadix* t, int depth)
 {
   int nb = 0;
   printf("digraph G {\n");
   for (uint8_t i = 0; i < t->nb_children; i++)
   {
-    print_node(&t->children[i], &nb);
+    print_node(&t->children[i], &nb, depth, 0);
   }
   printf("}\n");
 }
