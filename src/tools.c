@@ -15,13 +15,18 @@ int compare_word(const void* w1, const void* w2)
 void print_json(Words* words)
 {
     printf("[");
+    fflush(stdout);
     for (uint i = 0; i < words->index; i++)
     {
         printf("{\"word\":\"%s\",\"freq\":%d,"
                "\"distance\":%d}", words->word[i].word,
                words->word[i].freq, words->word[i].dist);
+        fflush(stdout);
         if (i < words->index - 1)
-            printf(",");
+        {
+          printf(",");
+          fflush(stdout);
+        }
     }
     printf("]\n");
 }
