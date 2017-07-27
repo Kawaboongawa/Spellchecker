@@ -4,9 +4,6 @@
 #include "levenshtein.h"
 #include "tools.h"
 #include "word_struct.h"
-#define BUF_SIZE 128
-
-
 
 int main(int argc, char** argv)
 {
