@@ -1,5 +1,17 @@
 #include "tools.h"
 
+void sort_word(Words* words)
+{
+    qsort(words->word, words->index, sizeof(Word), compare_word);
+}
+
+int compare_word(const void* w1, const void* w2)
+{
+    return (((Word*) w1)->dist > ((Word*) w2)->dist)
+        || (((Word*) w1)->dist == ((Word*) w2)->dist
+            && ((Word*) w1)->freq < ((Word*) w2)->freq);
+}
+
 void print_json(Words* words)
 {
     printf("[");

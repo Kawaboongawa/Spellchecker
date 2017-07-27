@@ -22,7 +22,7 @@ int main(int argc, char** argv)
     /*size_t  size = 0;
     char* buf = NULL;
       getline(&buf, &size, stdin);*/
-    char * buf = "approx 0 test";
+    char * buf = "approx 0 rtest";
     char* str = strdup(buf);
     char* delimiters = " \n";
     int dist = 0;
