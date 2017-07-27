@@ -8,8 +8,6 @@
 #include "search.h"
 #define BUF_SIZE 128
 
-
-
 int main(int argc, char** argv)
 {
     if (argc < 2)
