@@ -156,31 +156,25 @@ void add_word_trie(TrieRadix *trie, char *word, uint32_t freq)
   }
 }
 
-void release_node(TrieNode *trie, int* a)
+void release_node(TrieNodeRadix *trie)
 {
-  if (trie->nb_children == 1 && trie->freq == 0)
-  {
-    (*a)++;
-  }
   for (uint8_t i = 0; i < trie->nb_children; i++)
   {
-    release_node(&trie->children[i], a);
+    release_node(&trie->children[i]);
   }
   if (trie->nb_children > 0)
     free(trie->children);
 }
 
-void release_trie(Trie *trie)
+void release_trie(TrieRadix *trie)
 {
-  int a = 0;
   for (uint8_t i = 0; i < trie->nb_children; i++)
   {
-    release_node(&trie->children[i], &a);
+    release_node(&trie->children[i]);
   }
   if (trie->nb_children > 0)
     free(trie->children);
   free(trie);
-  printf("\n%d nodes with 1 son.\n", a);
 }
 
 TrieNodeRadix *search_node(TrieNodeRadix *node, char *word)
@@ -254,7 +248,7 @@ char *load_trie(char *path)
   file = fopen(path, "rb");
   if (!file)
   {
-    fprintf(stderr, "Error loading file %s\n", path);
+    fprintf(stderr, "File not found: %s\n", path);
     exit(1);
   }
   fseek(file, 0, SEEK_END);

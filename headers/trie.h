@@ -71,8 +71,8 @@ typedef struct TrieNodeRadix
 
 void add_word_node(TrieRadix *trie, TrieNodeRadix *node, char *word, uint32_t freq);
 void add_word_trie(TrieRadix *trie, char *word, uint32_t freq);
-void release_node(TrieNode *trie, int* a);
-void release_trie(Trie *trie);
+void release_node(TrieNodeRadix *trie);
+void release_trie(TrieRadix *trie);
 
 // Search for a word in a trie, return NULL if not found
 TrieNodeRadix *search_trie(TrieRadix *trie, char *word);

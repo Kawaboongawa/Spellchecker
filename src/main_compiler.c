@@ -48,14 +48,22 @@ void test(TrieRadix *t)
   printf("==== OK ====\n");
 }
 
-int main(void)
+int main(int argc, char *argv[])
 {
+  if (argc < 3)
+  {
+    printf("Usage: ./ref/osx/TextMiningCompiler /path/to/word/freq.txt /path/to/output/dict.bin\n");
+    exit(1);
+  }
+  char *dict = argv[1];
+  char *bin = argv[2];
+
   TrieRadix *t = malloc(sizeof(TrieRadix));
   t->nb_children = 0;
   t->nb_nodes = 0;
   t->children = NULL;
 
-  char *file = load_trie("misc/words.txt");
+  char *file = load_trie(dict);
   uint32_t max_freq = 0;
 
   char *token, *str, *tofree;
@@ -95,26 +103,26 @@ int main(void)
   free(tofree);
   free(file);
 
-  printf("size Trie: %lu\n", sizeof(Trie));
-  printf("size TrieNode: %lu\n", sizeof(TrieNode));
-  printf("size TrieNodeCompact: %lu\n", sizeof(TrieNodeCompact));
+  //printf("size Trie: %lu\n", sizeof(Trie));
+  //printf("size TrieNode: %lu\n", sizeof(TrieNode));
+  //printf("size TrieNodeCompact: %lu\n", sizeof(TrieNodeCompact));
 
-  printf("nb nodes: %u\n", t->nb_nodes);
-  printf("Max freq: %d\n", max_freq);
+  //printf("nb nodes: %u\n", t->nb_nodes);
+  //printf("Max freq: %d\n", max_freq);
 
-  assert(count_trie(t) == (int)t->nb_nodes);
+  //assert(count_trie(t) == (int)t->nb_nodes);
   compress_trie(t);
-  assert(count_trie(t) == (int)t->nb_nodes);
+  //assert(count_trie(t) == (int)t->nb_nodes);
 
   //print_trie(t);
-  binarize_trie(t, "tree.bin");
-  //release_trie(t);
+  binarize_trie(t, bin);
+  release_trie(t);
 
-  TrieRadix* loaded = load_binarize_trie("tree.bin");
+  //TrieRadix* loaded = load_binarize_trie("tree.bin");
 
-  printf("nb nodes: %u\n", loaded->nb_nodes);
+  //printf("nb nodes: %u\n", loaded->nb_nodes);
 
-  test(loaded);
+  //test(loaded);
 
   //print_trie(loaded);
   //release_trie(t);
