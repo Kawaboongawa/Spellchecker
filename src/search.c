@@ -18,7 +18,7 @@ void search(TrieRadix* trie, char* word, uint cost)
     delete_string(&str);
     //printf("%d\n", cost);
     sort_word(&res);
-    //print_json(&res);
+    print_json(&res);
     delete_words(&res);
 }
 
