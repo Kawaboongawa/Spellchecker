@@ -32,7 +32,7 @@ void search_rec(TrieNode* tn, char* word, String* str,
         currow[i] = min3(insert_cost, delete_cost, replace_cost);
     }
     //printf("%d ", currow[len]);
-    if (currow[len] <= cost) // && check tn.word != null ???
+    if (currow[len] <= cost  && tn->freq != 0 )
     {
         char * currstr = get_word(str);
         Word currword = {.word = currstr, .freq = tn->freq, .dist = currow[len]};
