@@ -7,14 +7,15 @@ void sort_word(Words* words)
 
 int compare_word(const void* w1, const void* w2)
 {
-    return (((Word*) w1)->dist > ((Word*) w2)->dist)
+    if ((((Word*) w1)->dist > ((Word*) w2)->dist)
         || (((Word*) w1)->dist == ((Word*) w2)->dist
             && ((Word*) w1)->freq < ((Word*) w2)->freq)
         || (((Word*) w1)->dist == ((Word*) w2)->dist
             && ((Word*) w1)->freq == ((Word*) w2)->freq
-            && strcmp(((Word*) w1)->word, ((Word*) w2)->word) > 0);
-            
-        
+            && strcmp(((Word*) w1)->word, ((Word*) w2)->word) > 0))
+        return 1;
+    return -1;
+    
 }
 
 void print_json(Words* words)
