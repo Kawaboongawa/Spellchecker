@@ -16,16 +16,12 @@ int main(int argc, char** argv)
         printf("Aborted (core dumped)\n");
         return 134;
     }
-    //uint matrix[7][2];
-    //levenshtein("rlamar", "r", 6, 1, matrix);
-    //printf("%d %d % d\n", matrix[5][4], matrix[5][5], matrix[5][6]);
     TrieRadix* trie = load_binarize_trie(argv[1]);
 
-    /*size_t  size = 0;
+    size_t  size = 0;
     char* buf = NULL;
-      getline(&buf, &size, stdin);*/
+    getline(&buf, &size, stdin);
 
-    char *buf = "approx 1 carala";
     char *str = strdup(buf);
     char *delimiters = " \n";
     int dist = 0;
@@ -41,7 +37,7 @@ int main(int argc, char** argv)
 
     search(trie, token, dist);
 
-    //free(buf);
+    free(buf);
     free(str);
     return 0;
 }

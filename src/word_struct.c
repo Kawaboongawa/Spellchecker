@@ -50,9 +50,9 @@ void append_letter(String* s, char letter)
     s->index++;
 }
 
-void dec_index(String* s, uint nb)
+void dec_index(String* s)
 {
-    s->index -= nb;
+    s->index--;
 }
 
 char* get_word(String* s)

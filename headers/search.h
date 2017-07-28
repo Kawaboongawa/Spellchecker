@@ -9,10 +9,7 @@
 #include "levenshtein.h"
 
 void search(TrieRadix* trie, char* word, uint cost);
-/*
-void search_rec(TrieNode* tn, char* word, String* str,
-                Words* res, uint cost, uint len);
-*/
 
 void search_rec(TrieNodeRadix* tn, char* word, String* str, ushort prevrow[],
-                ushort prevrow2[], Words* res, uint cost, uint len, uint y);
+                ushort prevrow2[], Words* res, uint cost, uint len,
+                int index, uint word_len);

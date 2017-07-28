@@ -9,7 +9,12 @@ int compare_word(const void* w1, const void* w2)
 {
     return (((Word*) w1)->dist > ((Word*) w2)->dist)
         || (((Word*) w1)->dist == ((Word*) w2)->dist
-            && ((Word*) w1)->freq < ((Word*) w2)->freq);
+            && ((Word*) w1)->freq < ((Word*) w2)->freq)
+        || (((Word*) w1)->dist == ((Word*) w2)->dist
+            && ((Word*) w1)->freq == ((Word*) w2)->freq
+            && strcmp(((Word*) w1)->word, ((Word*) w2)->word) > 0);
+            
+        
 }
 
 void print_json(Words* words)
