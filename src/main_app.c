@@ -35,8 +35,15 @@ int main(int argc, char** argv)
     dist = atoi(token);
     token = strtok(NULL, delimiters);
 
-    search(trie, token, dist);
-
+    if (dist > 0)
+    {
+      search(trie, token, dist);
+    }
+    else
+    {
+      TrieNodeRadix *n = search_trie(trie, token);
+      printf("[{\"word\":\"%s\",\"freq\":%d,""\"distance\":0}]\n", token,n->freq);
+    }
     free(buf);
     free(str);
     return 0;

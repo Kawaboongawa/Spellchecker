@@ -203,7 +203,7 @@ TrieNodeRadix *search_trie(TrieRadix *trie, char *word)
   for (uint8_t i = 0; i < trie->nb_children; i++)
   {
     unsigned long len = strlen(trie->children[i].letter);
-    char * tmp = word;
+    char *tmp = word;
     for (unsigned long j = 0; j < len; j++)
     {
       if (trie->children[i].letter[j] != *word && j == 0)
