@@ -40,13 +40,20 @@ test: all
 	./tests/test.py ./tests/testdir/ $(OS)
 	@make clean
 
+doc:
+	$(RM) -r doc
+	doxygen Doxyfile
+
 clean:
 	$(RM) $(DIRSRC)*.o
 	$(RM) $(TARGET)
+	$(RM) -r doc
 	$(RM) -r *.dSYM
 	$(RM) -r .DS_STORE
 	$(RM) -r misc/.DS_STORE
 	$(RM) TextMiningApp
 	$(RM) TextMiningCompiler
+	$(RM) *~
+	$(RM) *#
 
-.PHONY: all clean
+.PHONY: all clean doc test

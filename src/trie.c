@@ -1,3 +1,14 @@
+/**
+ * \file trie.c
+ * \brief Implementation d'un Trie.
+ * \author lugand_j, cetre_c
+ * \version 0.1
+ * \date 29 juillet 2017
+ *
+ * Implementation d'un Trie.
+ *
+ */
+
 #include "trie.h"
 
 void add_word_node(TrieRadix *trie, TrieNodeRadix *node, char *word, uint32_t freq)
