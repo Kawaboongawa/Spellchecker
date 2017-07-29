@@ -12,7 +12,7 @@ void search(TrieRadix* trie, char* word, uint cost, Words* res, String *str)
 
     for (size_t i = 0; i < trie->nb_children; i++)
         search_rec(&(trie->children[i]), word, str,
-                   currow, NULL, res, cost, len, 0);
+                   currow, NULL, res, cost, len, 0, 0);
 
     //delete_string(&str);
     //printf("%d\n", cost);
@@ -23,15 +23,15 @@ void search(TrieRadix* trie, char* word, uint cost, Words* res, String *str)
 
 void search_rec(TrieNodeRadix* tn, char* word, String* str, ushort prevrow[],
                 ushort prevrow2[], Words* res, const uint cost, uint len,
-                int index)
+                int index, int cur_inf)
 {
     ushort currow[len + 1];
-    currow[0] = prevrow[0] + 1;
+    currow[cur_inf] = prevrow[cur_inf] + 1;
     append_letter(str, tn->letter[index]);
 
-    uint min = currow[0];
+    uint min = currow[cur_inf];
 
-    for (uint i = 1; i <= len; i++)
+    for (uint i = cur_inf + 1; i <= len; i++)
     {
         ushort insert_cost = currow[i - 1] + 1;
         ushort delete_cost = prevrow[i] + 1;
@@ -63,13 +63,13 @@ void search_rec(TrieNodeRadix* tn, char* word, String* str, ushort prevrow[],
           for (size_t i = 0; i < tn->nb_children; i++)
           {
               search_rec(&(tn->children[i]), word, str, currow, prevrow,
-                         res, cost, len, 0);
+                         res, cost, len, 0, currow[cur_inf] <= cost ? cur_inf : cur_inf + 1);
           }
         }
         else
         {
             search_rec(tn, word, str, currow, prevrow,
-                       res, cost, len, index);
+                       res, cost, len, index, currow[cur_inf] <= cost ? cur_inf : cur_inf + 1);
         }
     }
     dec_index(str);
