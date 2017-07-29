@@ -10,7 +10,7 @@ typedef unsigned int   uint;
 
 typedef struct
 {
-    char* word;
+    char *word;
     int   freq;
     int   dist;
 } Word;
@@ -18,14 +18,14 @@ typedef struct
 
 typedef struct
 {
-    Word*  word;
-    uint   index;
-    uint   size;
+    Word *word;
+    uint  index;
+    uint  size;
 } Words;
 
 typedef struct
 {
-    char* str;
+    char *str;
     int   index;
     int   size;
 } String;

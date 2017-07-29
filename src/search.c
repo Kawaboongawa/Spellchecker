@@ -13,7 +13,7 @@ void search(TrieRadix* trie, char* word, uint cost)
 
     for (size_t i = 0; i < trie->nb_children; i++)
         search_rec(&(trie->children[i]), word, &str,
-                   currow, NULL, &res, cost, len, -1, 0);
+                   currow, NULL, &res, cost, len, 0);
 
     delete_string(&str);
     //printf("%d\n", cost);
@@ -24,14 +24,8 @@ void search(TrieRadix* trie, char* word, uint cost)
 
 void search_rec(TrieNodeRadix* tn, char* word, String* str, ushort prevrow[],
                 ushort prevrow2[], Words* res, uint cost, uint len,
-                int index, uint word_len)
+                int index)
 {
-
-    if (index == -1)
-    {
-        word_len = strlen(tn->letter);
-        index = 0;
-    }
     ushort currow[len + 1];
     currow[0] = prevrow[0] + 1;
     append_letter(str, tn->letter[index]);
@@ -51,7 +45,7 @@ void search_rec(TrieNodeRadix* tn, char* word, String* str, ushort prevrow[],
     }
 
 
-    if ( index == (int) word_len - 1 && currow[len] <= cost  && tn->freq != 0)
+    if (tn->letter[index + 1] == '\0' && currow[len] <= cost  && tn->freq != 0)
     {
         char * currstr = get_word(str);
         Word currword = {.word = currstr, .freq = tn->freq,
@@ -62,13 +56,13 @@ void search_rec(TrieNodeRadix* tn, char* word, String* str, ushort prevrow[],
     for (uint i = 0; i <= len; i++)
         if (currow[i] <= cost)
         {
-            if (++index == (int) word_len)
+            if (tn->letter[++index] == '\0')
             for (size_t i = 0; i < tn->nb_children; i++)
                 search_rec(&(tn->children[i]), word, str, currow, prevrow,
-                           res, cost, len, -1, 0);
+                           res, cost, len, 0);
             else
                 search_rec(tn, word, str, currow, prevrow,
-                           res, cost, len, index, word_len);
+                           res, cost, len, index);
             break;
 
         }

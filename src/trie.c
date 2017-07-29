@@ -258,7 +258,6 @@ void binarize_node(FILE *file, TrieNodeRadix *node)
   fwrite(&c, sizeof(TrieNodeCompact), 1, file);
   fwrite(node->letter, strlen(node->letter), 1, file);
   putc('\0', file);
-  fflush(file);
 
   for (uint8_t i = 0; i < node->nb_children; i++)
     binarize_node(file, &node->children[i]);
