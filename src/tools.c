@@ -30,3 +30,16 @@ void print_json(Words* words)
     }
     printf("]\n");
 }
+
+inline int min3 (int a, int b, int c)
+{
+  __asm__ (
+           "cmp     %0, %1\n\t"
+           "cmovle  %1, %0\n\t"
+           "cmp     %0, %2\n\t"
+           "cmovle  %2, %0\n\t"
+          : "+r"(a) :
+            "%r"(b), "r"(c)
+          );
+  return a;
+}

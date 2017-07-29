@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 
 from subprocess import *
-from time import *
+import time
 import sys
 import os
 import resource
@@ -24,20 +24,27 @@ def test(test_path, content):
     #info = resource.getrusage(resource.RUSAGE_CHILDREN)
     #print(info)
     bcontent = str.encode(content)
-    t1 =time()
-    p1 = Popen(["../TextMiningApp", "../words.bin"], stdout=PIPE, stdin=PIPE, stderr=PIPE)
+    p1 = Popen(["./TextMiningApp", "./words.bin"], stdout=PIPE, stdin=PIPE, stderr=PIPE)
+    p2 = Popen(["./ref/linux64/TextMiningApp", "./ref/linux64/words.bin"], stdout=PIPE, stdin=PIPE, stderr=PIPE)
+
+    time.sleep(1)
+    t1 = time.time()
     out1 = p1.communicate(input=bcontent)[0]
-    t2 = time()
-    p2 = Popen(["../ref/linux64/TextMiningApp", "../ref/linux64/words.bin"], stdout=PIPE, stdin=PIPE, stderr=PIPE)
+    t2 = time.time()
+    t3 = time.time()
     out2 = p2.communicate(input=bcontent)[0]
-    t3 = time()
+    t4 = time.time()
+    info2 = resource.getrusage(resource.RUSAGE_CHILDREN)
+    
     if (out1 == out2):
         print(Colour.GREEN + "Match" + Colour.END)
     else:
         print(Colour.RED + "FAIL" + Colour.END)
     #print(info)
+    #print("SpellChecker made it in " + str(info1.ru_utime)[:6] + "s")
+    #print("The ref made it in " + str(info2.ru_utime)[:6] + "s")
     print("SpellChecker made it in " + str(t2 - t1)[:6] + "s")
-    print("The ref made it in " + str(t3 - t2)[:6] + "s")
+    print("The ref made it in " + str(t4 - t3)[:6] + "s")
     print("-----------------------------------------")
     
     

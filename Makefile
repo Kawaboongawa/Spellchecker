@@ -1,12 +1,10 @@
 #!/bin/bash
 
 UNAME= $(shell uname)
-
 CC=gcc
 ifeq ($(UNAME), Darwin)
 CC=gcc-7
 endif
-
 CFLAGS= -pedantic -Werror -Wall -Wextra -std=gnu99 -g -O3
 DIRSRC= ./src/
 TARGET=TextMiningCompiler TextMiningApp
@@ -30,11 +28,17 @@ TextMiningCompiler : $(SRC1)
 TextMiningApp : $(SRC2)
 	$(CC) -I$(HEADERS) -o $@ $^ $(CFLAGS)
 
+test: all
+	./tests/test.py ./tests/testdir/
+	@make clean
+
 clean:
 	$(RM) $(DIRSRC)*.o
 	$(RM) $(TARGET)
 	$(RM) -r *.dSYM
 	$(RM) -r .DS_STORE
 	$(RM) -r misc/.DS_STORE
-
+	$(RM) TextMiningApp
+	$(RM) TextMiningCompiler
+        
 .PHONY: all clean
