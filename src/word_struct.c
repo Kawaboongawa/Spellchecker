@@ -46,8 +46,7 @@ void append_letter(String* s, char letter)
         s->str = realloc(s->str, s->size * sizeof (char));
         assert(s->str);
     }
-    s->str[s->index] = letter;
-    s->index++;
+    s->str[s->index++] = letter;
 }
 
 void dec_index(String* s)
@@ -66,6 +65,5 @@ char* get_word(String* s)
 
 char get_letter_index(String* s, int index)
 {
-    assert(index < s->index);
     return s->str[index];
 }

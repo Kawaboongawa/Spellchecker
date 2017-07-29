@@ -1,5 +1,7 @@
 #include "levenshtein.h"
 
+#define MIN3(a, b, c) ((a) < (b) ? ((a) < (c) ? (a) : (c)) : ((b) < (c) ? (b) : (c)))
+
 void levenshtein(char *s1, char *s2, uint len1,
                  uint len2, uint matrix[][len2])
 {
@@ -9,15 +11,15 @@ void levenshtein(char *s1, char *s2, uint len1,
 
     for (uint x = 0; x <= len1; ++x)
         matrix[0][x] = x;
-    
+
     for (uint y = 1; y <= len2; ++y)
         matrix[y][0] = y;
-    
+
     for (uint y = 1; y <= len2; y++)
         for (uint x = 1; x <= len1; x++)
         {
             int tmp = (s1[x - 1] == s2[y - 1] ? 0 : 1);
-            matrix[y][x] = min3(matrix[y - 1][x] + 1,
+            matrix[y][x] = MIN3(matrix[y - 1][x] + 1,
                                 matrix[y][x - 1] + 1,
                                 matrix[y - 1][x - 1] + tmp);
             if (y > 1 && x > 1
@@ -27,7 +29,7 @@ void levenshtein(char *s1, char *s2, uint len1,
                 matrix[y][x] = matrix[y - 2][x - 2] + tmp;
         }
 
-    
+
     for (uint y = 0; y <= len2; y++)
     {
         for (uint x = 0; x <= len1; x++)
@@ -37,4 +39,3 @@ void levenshtein(char *s1, char *s2, uint len1,
         printf("\n");
     }
 }
-    

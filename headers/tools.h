@@ -36,5 +36,3 @@ void sort_word(Words* words);
 int compare_word(const void* w1, const void* w2);
 
 void print_json(Words* words);
-
-int min3(int a, int b, int c);
