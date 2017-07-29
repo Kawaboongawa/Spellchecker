@@ -1,6 +1,12 @@
 #!/bin/bash
 
+UNAME= $(shell uname)
+
 CC=gcc
+ifeq ($(UNAME), Darwin)
+CC=gcc-7
+endif
+
 CFLAGS= -pedantic -Werror -Wall -Wextra -std=gnu99 -g -O3
 DIRSRC= ./src/
 TARGET=TextMiningCompiler TextMiningApp
