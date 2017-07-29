@@ -1,10 +1,14 @@
 #!/bin/bash
 
 UNAME= $(shell uname)
+
+OS=linux64
 CC=gcc
 ifeq ($(UNAME), Darwin)
+OS=osx
 CC=gcc-7
 endif
+
 CFLAGS= -pedantic -Werror -Wall -Wextra -std=gnu99 -g -O3
 DIRSRC= ./src/
 TARGET=TextMiningCompiler TextMiningApp
@@ -29,7 +33,11 @@ TextMiningApp : $(SRC2)
 	$(CC) -I$(HEADERS) -o $@ $^ $(CFLAGS)
 
 test: all
-	./tests/test.py ./tests/testdir/
+	./ref/$(OS)/TextMiningCompiler misc/words.txt words.bin
+	sudo mv words.bin ref/$(OS)/
+	./TextMiningCompiler misc/words.txt words.bin
+	./TextMiningCompiler --export
+	./tests/test.py ./tests/testdir/ $(OS)
 	@make clean
 
 clean:
@@ -40,5 +48,5 @@ clean:
 	$(RM) -r misc/.DS_STORE
 	$(RM) TextMiningApp
 	$(RM) TextMiningCompiler
-        
+
 .PHONY: all clean
