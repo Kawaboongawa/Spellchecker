@@ -29,6 +29,8 @@ void search_rec(TrieNodeRadix* tn, char* word, String* str, ushort prevrow[],
     currow[0] = prevrow[0] + 1;
     append_letter(str, tn->letter[index]);
 
+    uint min = currow[0];
+
     for (uint i = 1; i <= len; i++)
     {
         ushort insert_cost = currow[i - 1] + 1;
@@ -42,6 +44,8 @@ void search_rec(TrieNodeRadix* tn, char* word, String* str, ushort prevrow[],
             && word[i - 2] == get_letter_index(str, str->index - 1)
             && prevrow2[i - 2] + tmp < currow[i])
             currow[i] = prevrow2[i - 2] + tmp;
+        if (currow[i] < min)
+          min = currow[i];
     }
 
     if (tn->letter[index + 1] == '\0' && currow[len] <= cost && tn->freq != 0)
@@ -52,22 +56,20 @@ void search_rec(TrieNodeRadix* tn, char* word, String* str, ushort prevrow[],
         append_word(res, &currword);
     }
 
-    for (uint i = 0; i <= len; i++)
+    if (min <= cost)
     {
-        if (currow[i] <= cost)
+        if (tn->letter[++index] == '\0')
         {
-            if (tn->letter[++index] == '\0')
-            {
-              for (size_t i = 0; i < tn->nb_children; i++)
-                  search_rec(&(tn->children[i]), word, str, currow, prevrow,
-                             res, cost, len, 0);
-            }
-            else
-            {
-                search_rec(tn, word, str, currow, prevrow,
-                           res, cost, len, index);
-            }
-            break;
+          for (size_t i = 0; i < tn->nb_children; i++)
+          {
+              search_rec(&(tn->children[i]), word, str, currow, prevrow,
+                         res, cost, len, 0);
+          }
+        }
+        else
+        {
+            search_rec(tn, word, str, currow, prevrow,
+                       res, cost, len, index);
         }
     }
     dec_index(str);

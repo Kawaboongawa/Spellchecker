@@ -45,6 +45,7 @@ def test(test_path, content, os_name):
     if (out1 == out2):
         print(Colour.GREEN + "Match" + Colour.END)
     else:
+        print(out1)
         print(Colour.RED + "FAIL" + Colour.END)
 
     print("Ref is {} faster than SpellChecker.".format((t2 - t1) / (t4 - t3)))
