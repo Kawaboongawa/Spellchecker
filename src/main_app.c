@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "levenshtein.h"
 #include "tools.h"
 #include "word_struct.h"
 #include "trie.h"

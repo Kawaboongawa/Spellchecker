@@ -5,6 +5,16 @@ void sort_word(Words* words)
     qsort(words->word, words->index, sizeof(Word), compare_word);
 }
 
+/*! \brief stucture containing a string.
+**
+** This structure is used to keep the word while recursively iterating
+** through the radix tree and allow to erase/add characters without 
+** fearing buffer overflow.
+**
+** \param str The string contained in the struct.
+** \param index The current index used to add elts in the structure.
+** \param size Number of elements in the structure.
+**/
 int compare_word(const void* w1, const void* w2)
 {
     if ((((Word*) w1)->dist > ((Word*) w2)->dist)
