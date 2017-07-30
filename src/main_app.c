@@ -13,6 +13,8 @@
 #include "word_struct.h"
 #include "trie.h"
 #include "search.h"
+#include "errno.h"
+
 #define BUF_SIZE 128
 
 int main(int argc, char** argv)
@@ -39,13 +41,20 @@ int main(int argc, char** argv)
       char *token = strtok(str2, delimiters);
 
       if (strcmp("approx", token))
-          return 2;
-      token = strtok(NULL, delimiters);
-
+          continue;
+      
+      if ((token = strtok(NULL, delimiters)) == NULL)
+          continue;
+ 
+      char *ptr;
       //TODO error handling by using strtol
-      dist = atoi(token);
-      token = strtok(NULL, delimiters);
-
+      dist = strtol(token, &ptr, 10);
+      if (*ptr != '\0')
+          continue;
+      
+      if ((token = strtok(NULL, delimiters)) == NULL)
+          continue;
+      
       if (dist > 0)
       {
         search(trie, token, dist, &res, &str);
@@ -55,7 +64,10 @@ int main(int argc, char** argv)
       else
       {
         TrieNodeRadix *n = search_trie(trie, token);
-        printf("[{\"word\":\"%s\",\"freq\":%d,""\"distance\":0}]\n", token, n->freq);
+        if (n)
+            printf("[{\"word\":\"%s\",\"freq\":%d,""\"distance\":0}]\n", token, n->freq);
+        else
+            printf("[]\n");
       }
       free(buf);
       free(str2);

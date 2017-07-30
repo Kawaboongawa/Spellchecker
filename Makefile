@@ -9,7 +9,7 @@ OS=osx
 CC=gcc-7
 endif
 
-CFLAGS= -pedantic -Werror -Wall -Wextra -std=gnu99 -g -O3 -mtune=generic
+CFLAGS= -pedantic -Werror -Wall -Wextra -std=gnu99 -O3 -g -mtune=generic
 DIRSRC= ./src/
 TARGET=TextMiningCompiler TextMiningApp
 HEADERS=headers
