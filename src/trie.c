@@ -244,7 +244,8 @@ char *load_trie(char *path)
     exit(1);
   }
 
-  fread(m, len, 1, file);
+  int n = fread(m, len, 1, file);
+  (void) n;
   fclose(file);
 
   return m;
