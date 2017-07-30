@@ -47,7 +47,6 @@ int main(int argc, char** argv)
           continue;
  
       char *ptr;
-      //TODO error handling by using strtol
       dist = strtol(token, &ptr, 10);
       if (*ptr != '\0')
           continue;
@@ -73,5 +72,7 @@ int main(int argc, char** argv)
       free(str2);
       buf = NULL;
     }
+    delete_string(&str);
+    delete_words(&res);
     return 0;
 }

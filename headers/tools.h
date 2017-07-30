@@ -104,3 +104,10 @@ void export_test(void);
 **         to test if all nodes can be reached and have the correct frequency.
 **/
 void test(TrieRadix *t);
+
+
+/*!
+**  \brief return the min value between tree integers.
+**/
+
+int min3(int a, int b, int c);

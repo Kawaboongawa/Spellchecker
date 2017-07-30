@@ -1,7 +1,5 @@
 #include "search.h"
 
-#define MIN3(a, b, c) ((a) < (b) ? ((a) < (c) ? (a) : (c)) : ((b) < (c) ? (b) : (c)))
-
 void search(TrieRadix* trie, char* word, uint cost, Words* res, String *str)
 {
     size_t len = strlen(word);
@@ -13,12 +11,8 @@ void search(TrieRadix* trie, char* word, uint cost, Words* res, String *str)
     for (size_t i = 0; i < trie->nb_children; i++)
         search_rec(&(trie->children[i]), word, str,
                    currow, NULL, res, cost, len, 0, 0);
-
-    //delete_string(&str);
-    //printf("%d\n", cost);
     sort_word(res);
     print_json(res);
-    //delete_words(&res);
 }
 
 void search_rec(TrieNodeRadix* tn, char* word, String* str, ushort prevrow[],
@@ -38,7 +32,7 @@ void search_rec(TrieNodeRadix* tn, char* word, String* str, ushort prevrow[],
         uchar  tmp = (word[i - 1] == tn->letter[index] ? 0 : 1);
         ushort replace_cost = prevrow[i - 1] + tmp;
 
-        currow[i] = MIN3(insert_cost, delete_cost, replace_cost);
+        currow[i] = min3(insert_cost, delete_cost, replace_cost);
         if (i > 1 && prevrow2 != NULL
             && word[i - 1] == get_letter_index(str, str->index - 2)
             && word[i - 2] == get_letter_index(str, str->index - 1)
