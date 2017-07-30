@@ -14,6 +14,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "trie.h"
 
 
 typedef unsigned char  uchar;
@@ -90,5 +91,16 @@ int compare_word(const void* w1, const void* w2);
 /*!
 **  \brief Print a Words struct to the Json format.
 **/
-
 void print_json(Words* words);
+
+/*!
+**  \brief Export tests files for distance 0, 1 and 2
+**         Ratio 1, 1/100, 1/1000.
+**/
+void export_test(void);
+
+/*!
+**  \brief Search all nodes of the dictionary in the constructed Trie
+**         to test if all nodes can be reached and have the correct frequency.
+**/
+void test(TrieRadix *t);

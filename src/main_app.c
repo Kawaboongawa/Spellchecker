@@ -1,3 +1,11 @@
+/**
+ * \file main_compiler.c
+ * \brief Entry point to generate the binary TextMiningApp.
+ * \author lugand_j, cetre_c
+ * \version 0.1
+ * \date 29 juillet 2017
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 

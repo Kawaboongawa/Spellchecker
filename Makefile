@@ -15,7 +15,8 @@ TARGET=TextMiningCompiler TextMiningApp
 HEADERS=headers
 
 SRC1= $(DIRSRC)main_compiler.c \
-$(DIRSRC)trie.c
+$(DIRSRC)trie.c \
+$(DIRSRC)tools.c
 
 SRC2= $(DIRSRC)main_app.c \
 $(DIRSRC)tools.c \

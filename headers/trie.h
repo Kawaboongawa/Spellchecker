@@ -1,3 +1,6 @@
+#ifndef TRIE_H
+# define TRIE_H
+
 /**
  * \file trie.h
  * \brief Patricia Trie implementation.
@@ -5,9 +8,6 @@
  * \version 0.1
  * \date 29 juillet 2017
  */
-
-#ifndef TRIE_H
-# define TRIE_H
 
 # include <stdint.h>
 # include <stdlib.h>

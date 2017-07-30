@@ -244,9 +244,9 @@ char *load_trie(char *path)
     exit(1);
   }
 
-  int n = fread(m, len, 1, file);
-  (void) n;
+  fread(m, len, 1, file);
   fclose(file);
+
   return m;
 }
 
@@ -347,7 +347,6 @@ TrieRadix *load_binarize_trie(char *path)
   }
   t->nb_nodes = tmp->nb_nodes;
   t->nb_children = tmp->nb_children;
-  //printf("nb: %u\n", tmp->nb_children);
 
   if (t->nb_children > 0)
   {
@@ -358,7 +357,6 @@ TrieRadix *load_binarize_trie(char *path)
       exit(1);
     }
     TrieNodeCompact *last = (TrieNodeCompact *)(tmp + 1);
-    //printf("%p\n", (void *)last);
 
     for (uint8_t i = 0; i < t->nb_children; i++)
     {

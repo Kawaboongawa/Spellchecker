@@ -43,7 +43,7 @@ void search(TrieRadix* trie, char* word, uint cost, Words *res, String *str);
 ** \param word The word that we are looking for through the search.
 ** \param str  Contains the current string while going through the radix tree
 ** \param prevrow contain the immediate upper row in the levenshtein matrix.
-** \param prevrow2 contain the second upper row in the levenshtein matrix (y - 2) 
+** \param prevrow2 contain the second upper row in the levenshtein matrix (y - 2)
 ** \param res  The structure that contains the words that match the request
 ** \param cost The maximum distance allowed during the search.
 ** \param len  The len of the string in the node
