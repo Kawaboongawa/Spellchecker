@@ -52,6 +52,7 @@ clean:
 	$(RM) -r misc/.DS_STORE
 	$(RM) TextMiningApp
 	$(RM) TextMiningCompiler
+	$(RM) *.bin
 	$(RM) *~
 	$(RM) *#
 

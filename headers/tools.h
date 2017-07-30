@@ -25,7 +25,7 @@ typedef unsigned int   uint;
 **
 ** A Word is the basic structure that is used to keep results that
 ** will be displayed in JSon format later on.
-** 
+**
 ** \param word A string containing the word matching the request.
 ** \param freq the frequence of the word given in the radix tree.
 ** \param dist the distance of the word compare to the original request.
@@ -57,7 +57,7 @@ typedef struct
 
  **
 ** This structure is used to keep the word while recursively iterating
-** through the radix tree and allow to erase/add characters without 
+** through the radix tree and allow to erase/add characters without
 ** fearing buffer overflow.
 **
 ** \param str The string contained in the struct.
